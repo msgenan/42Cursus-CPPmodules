@@ -8,7 +8,7 @@ CPPFLAGS    = -Wall -Wextra -Werror -std=c++98
 OBJ_DIR     = obj
 
 # Sources & objects
-SRCS        = phonebook.cpp
+SRCS        = PhoneBook.cpp Contact.cpp
 OBJS        = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
