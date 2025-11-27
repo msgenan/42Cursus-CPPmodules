@@ -2,6 +2,7 @@
 # define PHONEBOOK_HPP
 
 #include <string>
+#include <iostream>
 #include "Contact.hpp"
 
 class PhoneBook
@@ -9,7 +10,7 @@ class PhoneBook
     private:
         Contact contacts[8];
         int     contactCount;
-        int     nextContact;
+        int     contactIndex;
 
         std::string formatField(const std::string &str) const;
 
