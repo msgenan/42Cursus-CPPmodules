@@ -1,6 +1,5 @@
 #include "Contact.hpp"
 
-
 void Contact::setFirstName(const std::string &str)
 {
     firstName = str;
