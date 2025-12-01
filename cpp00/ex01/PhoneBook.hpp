@@ -2,8 +2,6 @@
 # define PHONEBOOK_HPP
 
 #include <string>
-#include <iomanip>
-#include <iostream>
 #include "Contact.hpp"
 
 class PhoneBook
@@ -13,6 +11,7 @@ class PhoneBook
         int     contactCount;
         int     contactIndex;
 
+        int getValidIndex() const;
         std::string formatField(const std::string &str) const;
 
     public:
