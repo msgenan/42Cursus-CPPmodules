@@ -32,3 +32,61 @@ Account::~Account()
     std::cout << "index:" << _accountIndex << ";amount:"
               << _amount  << ";closed"     << std::endl;
 }
+
+int Account::getNbAccounts( void ) {
+    return _nbAccounts;
+}
+
+int Account::getTotalAmount( void ) {
+    return _totalAmount;
+}
+
+int Account::getNbDeposits( void ) {
+    return _totalNbDeposits;
+}
+
+int Account::getNbWithdrawals( void ) {
+    return _totalNbWithdrawals;
+}
+
+int Account::checkAmount( void ) const {
+    return _amount;
+}
+
+void Account::makeDeposit( int deposit ) 
+{
+
+}
+
+bool Account::makeWithdrawal( int withdrawal ) 
+{
+
+}
+
+void Account::displayAccountsInfos( void )
+{
+
+}
+
+void Account::displayStatus( void ) const
+{
+
+}
+
+void Account::_displayTimestamp( void )
+{
+    // time_in_seconds: Şu anki zamanı saniye cinsinden tutar.
+    std::time_t time_in_seconds = std::time(NULL); 
+    
+    // local_time_info: Yerel saati struct tm formatında tutar.
+    std::tm* local_time_info = std::localtime(&time_in_seconds);
+    
+    // log_buffer: Formata uygun zaman bilgisinin yazılacağı karakter dizisi.
+    char log_buffer[16]; 
+
+    // İstenen formatı buffer'a yaz.
+    std::strftime(log_buffer, sizeof(log_buffer), "%Y%m%d_%H%M%S", local_time_info);
+    
+    // Log formatını bas.
+    std::cout << "[" << log_buffer << "] ";
+}
