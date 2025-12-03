@@ -13,6 +13,7 @@ class PhoneBook
 
         int getValidIndex() const;
         std::string formatField(const std::string &str) const;
+        std::string getNonEmptyInput(const std::string& prompt);
 
     public:
         PhoneBook();

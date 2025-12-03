@@ -10,32 +10,28 @@ PhoneBook::PhoneBook()
 
 void PhoneBook::addContact()
 {
-    std::string input;
+    Contact& currentContact = contacts[contactIndex];
 
-    std::cout << "Enter first name: ";
-    std::getline(std::cin, input);
-    contacts[contactIndex].setFirstName(input);
+    currentContact.setFirstName(getNonEmptyInput("Enter first name: "));
+    if (currentContact.getFirstName().empty()) return;
 
-    std::cout << "Enter last name: ";
-    std::getline(std::cin, input);
-    contacts[contactIndex].setLastName(input);
+    currentContact.setLastName(getNonEmptyInput("Enter last name: "));
+    if (currentContact.getLastName().empty()) return;
 
-    std::cout << "Enter nickname: ";
-    std::getline(std::cin, input);
-    contacts[contactIndex].setNickname(input);
+    currentContact.setNickname(getNonEmptyInput("Enter nickname: "));
+    if (currentContact.getNickname().empty()) return;
 
-    std::cout << "Enter phone number: ";
-    std::getline(std::cin, input);
-    contacts[contactIndex].setPhoneNumber(input);
+    currentContact.setPhoneNumber(getNonEmptyInput("Enter phone number: "));
+    if (currentContact.getPhoneNumber().empty()) return;
 
-    std::cout << "Enter darkest secret: ";
-    std::getline(std::cin, input);
-    contacts[contactIndex].setDarkestSecret(input);
+    currentContact.setDarkestSecret(getNonEmptyInput("Enter darkest secret: "));
+    if (currentContact.getDarkestSecret().empty()) return;
 
     if (contactCount < 8)
         contactCount++;
 
     contactIndex = (contactIndex + 1) % 8;
+    std::cout << "Contact added successfully." << std::endl;
 }
 
 void PhoneBook::searchContacts() const
@@ -73,6 +69,29 @@ void PhoneBook::displayContact(int index) const
     std::cout << "Nickname: "       << contacts[index].getNickname()      << std::endl;
     std::cout << "Phone number: "   << contacts[index].getPhoneNumber()   << std::endl;
     std::cout << "Darkest secret: " << contacts[index].getDarkestSecret() << std::endl;
+}
+
+std::string PhoneBook::getNonEmptyInput(const std::string& prompt)
+{
+    std::string input;
+    
+    while (std::cin.good())
+    {
+        std::cout << prompt;
+        std::getline(std::cin, input);
+
+        if (std::cin.eof())
+        {
+            std::cin.clear();
+            return "";
+        }
+        
+        if (!input.empty()) {
+            return input;
+        }
+        std::cout << "Field cannot be empty. Please enter a value." << std::endl;
+    }
+    return "";
 }
 
 std::string PhoneBook::formatField(const std::string &str) const
