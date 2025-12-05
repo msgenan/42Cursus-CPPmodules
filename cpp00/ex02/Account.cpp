@@ -1,6 +1,6 @@
 #include "Account.hpp"
-#include <iostream>
-#include <ctime>
+#include <iostream> // std::cout, std::endl
+#include <ctime>    // std::time, std::localtime, std::strftime, std::tm
 
 int Account::_nbAccounts = 0;
 int Account::_totalAmount = 0;
