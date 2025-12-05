@@ -1,10 +1,8 @@
 #ifndef PHONEBOOK_HPP
 # define PHONEBOOK_HPP
 
-#include <string>
-#include <iomanip>
-#include <iostream>
 #include "Contact.hpp"
+#include <string> // std::string
 
 class PhoneBook
 {
