@@ -17,7 +17,6 @@ Account::Account( int initial_deposit )
     _nbAccounts++;
     _totalAmount += initial_deposit;
 
-    // Loglama: [TIMESTAMP] index:X;amount:Y;created
     _displayTimestamp();
     std::cout << "index:" << _accountIndex << ";amount:"
               << _amount  << ";created"    << std::endl;
@@ -55,12 +54,50 @@ int Account::checkAmount( void ) const {
 
 void Account::makeDeposit( int deposit ) 
 {
-    
+    int p_amount = _amount;
+
+    _amount += deposit;
+    _nbDeposits++;
+
+    _totalAmount += deposit;
+    _totalNbDeposits++;
+
+    _displayTimestamp();
+    std::cout << "index:"        << _accountIndex
+              << ";p_amount:"    << p_amount
+              << ";deposit:"     << deposit
+              << ";amount:"      << _amount
+              << ";nb_deposits:" << _nbDeposits
+              << std::endl;
 }
 
 bool Account::makeWithdrawal( int withdrawal ) 
 {
+    int p_amount = _amount;
+    _displayTimestamp();
 
+    if (_amount < withdrawal)
+    {
+        std::cout << "index:" << _accountIndex
+                  << ";p_amount:" << p_amount
+                  << ";withdrawal:refused"
+                  << std::endl;
+        return false;
+    }
+
+    _amount -= withdrawal;
+    _nbWithdrawals++;
+
+    _totalAmount -= withdrawal;
+    _totalNbWithdrawals++;
+    
+    std::cout << "index:"           << _accountIndex
+              << ";p_amount:"       << p_amount
+              << ";withdrawal:"     << withdrawal
+              << ";amount:"         << _amount
+              << ";nb_withdrawals:" << _nbWithdrawals
+              << std::endl;
+    return true;
 }
 
 void Account::displayAccountsInfos( void )
