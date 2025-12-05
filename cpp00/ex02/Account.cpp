@@ -102,7 +102,12 @@ bool Account::makeWithdrawal( int withdrawal )
 
 void Account::displayAccountsInfos( void )
 {
-
+    _displayTimestamp();
+    std::cout << "accounts:"     << getNbAccounts()
+              << ";total:"       << getTotalAmount()
+              << ";deposits:"    << getNbDeposits()
+              << ";withdrawals:" << getNbWithdrawals()
+              << std::endl;
 }
 
 void Account::displayStatus( void ) const
