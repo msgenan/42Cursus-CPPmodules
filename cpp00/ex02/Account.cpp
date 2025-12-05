@@ -55,7 +55,7 @@ int Account::checkAmount( void ) const {
 
 void Account::makeDeposit( int deposit ) 
 {
-
+    
 }
 
 bool Account::makeWithdrawal( int withdrawal ) 
@@ -70,23 +70,20 @@ void Account::displayAccountsInfos( void )
 
 void Account::displayStatus( void ) const
 {
-
+    _displayTimestamp();
+    std::cout << "index:"        << _accountIndex
+              << ";amount:"      << _amount
+              << ";deposits:"    << _nbDeposits
+              << ";withdrawals:" << _nbWithdrawals
+              << std::endl;
 }
 
 void Account::_displayTimestamp( void )
 {
-    // time_in_seconds: Şu anki zamanı saniye cinsinden tutar.
     std::time_t time_in_seconds = std::time(NULL); 
-    
-    // local_time_info: Yerel saati struct tm formatında tutar.
-    std::tm* local_time_info = std::localtime(&time_in_seconds);
-    
-    // log_buffer: Formata uygun zaman bilgisinin yazılacağı karakter dizisi.
-    char log_buffer[16]; 
+    std::tm*    local_time_info = std::localtime(&time_in_seconds);
 
-    // İstenen formatı buffer'a yaz.
+    char log_buffer[16];
     std::strftime(log_buffer, sizeof(log_buffer), "%Y%m%d_%H%M%S", local_time_info);
-    
-    // Log formatını bas.
     std::cout << "[" << log_buffer << "] ";
 }
