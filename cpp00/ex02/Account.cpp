@@ -74,10 +74,10 @@ void Account::makeDeposit( int deposit )
 bool Account::makeWithdrawal( int withdrawal ) 
 {
     int p_amount = _amount;
-    _displayTimestamp();
-
+    
     if (_amount < withdrawal)
     {
+        _displayTimestamp();
         std::cout << "index:" << _accountIndex
                   << ";p_amount:" << p_amount
                   << ";withdrawal:refused"
@@ -91,6 +91,7 @@ bool Account::makeWithdrawal( int withdrawal )
     _totalAmount -= withdrawal;
     _totalNbWithdrawals++;
     
+    _displayTimestamp();
     std::cout << "index:"           << _accountIndex
               << ";p_amount:"       << p_amount
               << ";withdrawal:"     << withdrawal
@@ -98,6 +99,16 @@ bool Account::makeWithdrawal( int withdrawal )
               << ";nb_withdrawals:" << _nbWithdrawals
               << std::endl;
     return true;
+}
+
+void Account::_displayTimestamp( void )
+{
+    std::time_t time_in_seconds = std::time(NULL); 
+    std::tm* local_time_info = std::localtime(&time_in_seconds);
+
+    char log_buffer[16];
+    std::strftime(log_buffer, sizeof(log_buffer), "%Y%m%d_%H%M%S", local_time_info);
+    std::cout << "[" << log_buffer << "] ";
 }
 
 void Account::displayAccountsInfos( void )
@@ -118,14 +129,4 @@ void Account::displayStatus( void ) const
               << ";deposits:"    << _nbDeposits
               << ";withdrawals:" << _nbWithdrawals
               << std::endl;
-}
-
-void Account::_displayTimestamp( void )
-{
-    std::time_t time_in_seconds = std::time(NULL); 
-    std::tm*    local_time_info = std::localtime(&time_in_seconds);
-
-    char log_buffer[16];
-    std::strftime(log_buffer, sizeof(log_buffer), "%Y%m%d_%H%M%S", local_time_info);
-    std::cout << "[" << log_buffer << "] ";
 }
