@@ -1,7 +1,7 @@
 #include "PhoneBook.hpp"
-#include <iostream> // std::cout, std::cin, std::endl, std::getline
-#include <iomanip>  // std::setw
-#include <cctype>   // isdigit
+#include <iostream>
+#include <iomanip>
+#include <cctype>
 
 PhoneBook::PhoneBook()
 {
@@ -13,20 +13,27 @@ void PhoneBook::addContact()
 {
     Contact& currentContact = contacts[contactIndex];
 
-    currentContact.setFirstName(getNonEmptyInput("Enter first name: "));
-    if (currentContact.getFirstName().empty()) return;
+    std::cout << "--- Adding New Contact ---" << std::endl;
 
-    currentContact.setLastName(getNonEmptyInput("Enter last name: "));
-    if (currentContact.getLastName().empty()) return;
+    std::string fn = getValidInput("Enter first name: ", "ALPHA");
+    if (fn.empty()) return;
+    currentContact.setFirstName(fn);
 
-    currentContact.setNickname(getNonEmptyInput("Enter nickname: "));
-    if (currentContact.getNickname().empty()) return;
+    std::string ln = getValidInput("Enter last name: ", "ALPHA");
+    if (ln.empty()) return;
+    currentContact.setLastName(ln);
 
-    currentContact.setPhoneNumber(getNonEmptyInput("Enter phone number: "));
-    if (currentContact.getPhoneNumber().empty()) return;
+    std::string nn = getValidInput("Enter nickname: ", "ANY");
+    if (nn.empty()) return;
+    currentContact.setNickname(nn);
 
-    currentContact.setDarkestSecret(getNonEmptyInput("Enter darkest secret: "));
-    if (currentContact.getDarkestSecret().empty()) return;
+    std::string pn = getValidInput("Enter phone number: ", "NUMERIC");
+    if (pn.empty()) return;
+    currentContact.setPhoneNumber(pn);
+
+    std::string ds = getValidInput("Enter darkest secret: ", "ANY");
+    if (ds.empty()) return;
+    currentContact.setDarkestSecret(ds);
 
     if (contactCount < 8)
         contactCount++;
@@ -72,27 +79,53 @@ void PhoneBook::displayContact(int index) const
     std::cout << "Darkest secret: " << contacts[index].getDarkestSecret() << std::endl;
 }
 
-std::string PhoneBook::getNonEmptyInput(const std::string& prompt)
+std::string PhoneBook::getValidInput(const std::string& prompt, const std::string& type)
 {
     std::string input;
-    
-    while (std::cin.good())
+    bool valid;
+
+    while (true)
     {
         std::cout << prompt;
-        std::getline(std::cin, input);
-
-        if (std::cin.eof())
-        {
-            std::cin.clear();
+        if (!std::getline(std::cin, input))
             return "";
+
+        if (input.empty())
+        {
+            std::cout << "Field cannot be empty." << std::endl;
+            continue;
         }
+
+        valid = true;
         
-        if (!input.empty()) {
-            return input;
+        if (type == "ALPHA")
+        {
+            for (size_t i = 0; i < input.length(); i++)
+            {
+                if (!std::isalpha(input[i])) 
+                {
+                    valid = false;
+                    std::cout << "Invalid input. Please enter letters only." << std::endl;
+                    break;
+                }
+            }
         }
-        std::cout << "Field cannot be empty. Please enter a value." << std::endl;
+        else if (type == "NUMERIC")
+        {
+            for (size_t i = 0; i < input.length(); i++)
+            {
+                if (!std::isdigit(input[i]))
+                {
+                    valid = false;
+                    std::cout << "Invalid input. Please enter digits only." << std::endl;
+                    break;
+                }
+            }
+        }
+
+        if (valid)
+            return input;
     }
-    return "";
 }
 
 std::string PhoneBook::formatField(const std::string &str) const
