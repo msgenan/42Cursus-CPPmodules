@@ -1,6 +1,16 @@
 #include "Zombie.hpp"
 
+Zombie::Zombie()
+{
+    this->name = "";
+}
+
 Zombie::Zombie(std::string name)
+{
+    this->name = name;
+}
+
+void Zombie::setName(std::string name)
 {
     this->name = name;
 }
