@@ -10,7 +10,7 @@ CPPFLAGS    = -Wall -Wextra -Werror -std=c++98
 OBJ_DIR     = obj
 
 # Sources & Objects
-SRCS        = NewZombie.cpp randomChump.cpp Zombie.cpp main.cpp
+SRCS        = newZombie.cpp randomChump.cpp Zombie.cpp main.cpp
 OBJS        = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
 # ******************************** STYLE ************************************ #
