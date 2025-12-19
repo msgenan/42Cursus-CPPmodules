@@ -4,6 +4,11 @@
 #include <string>
 #include <iostream>
 
+#define RESET   "\033[0m"
+#define CYAN    "\033[36m"
+#define YELLOW  "\033[33m"
+#define GREEN   "\033[32m"
+
 class Zombie {
 private:
     std::string name;
