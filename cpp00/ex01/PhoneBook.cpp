@@ -89,7 +89,7 @@ std::string PhoneBook::getValidInput(const std::string& prompt, const std::strin
     {
         std::cout << BOLD << prompt << RESET;
         if (!std::getline(std::cin, input))
-            return NULL;
+            return std::string();
 
         if (input.empty())
         {

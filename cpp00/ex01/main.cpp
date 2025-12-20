@@ -9,11 +9,9 @@ int main()
     while (true)
     {
         std::cout << YELLOW << "Enter command" << RESET << "(ADD, SEARCH, EXIT): ";
-        std::getline(std::cin, command);
-
-        if (std::cin.eof())
+        
+        if (!std::getline(std::cin, command))
             break;
-
         if (command == "ADD")
             phonebook.addContact();
         else if (command == "SEARCH")
