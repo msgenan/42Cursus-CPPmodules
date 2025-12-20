@@ -13,13 +13,13 @@ void PhoneBook::addContact()
 {
     Contact& currentContact = contacts[contactIndex];
 
-    std::cout << "--- Adding New Contact ---" << std::endl;
+    std::cout << GREEN << "--- Adding New Contact ---" << RESET << std::endl;
 
-    std::string fn = getValidInput("Enter first name: ", "ALPHA");
+    std::string fn = getValidInput("Enter first name: ", "ANY");
     if (fn.empty()) return;
     currentContact.setFirstName(fn);
 
-    std::string ln = getValidInput("Enter last name: ", "ALPHA");
+    std::string ln = getValidInput("Enter last name: ", "ANY");
     if (ln.empty()) return;
     currentContact.setLastName(ln);
 
@@ -37,30 +37,34 @@ void PhoneBook::addContact()
 
     if (contactCount < 8)
         contactCount++;
-
     contactIndex = (contactIndex + 1) % 8;
-    std::cout << "Contact added successfully." << std::endl;
+
+    std::cout << CLEAR_SCREEN << RESET;
+    std::cout << GREEN << "Contact added successfully." << RESET << std::endl;
 }
 
 void PhoneBook::searchContacts() const
 {
     if (contactCount == 0)
     {
-        std::cout << "No contacts saved." << std::endl;
+        std::cout << RED << "No contacts saved." << std::endl;
         return;
     }
 
-    std::cout << std::setw(10) << "Index"      << "|"
-              << std::setw(10) << "First Name" << "|"
-              << std::setw(10) << "Last Name"  << "|"
-              << std::setw(10) << "Nickname"   << std::endl;
+    std::cout << "---------------------------------------------" << std::endl;
+    std::cout << GREEN << std::setw(10) << "Index"      << RESET << "|"
+              << GREEN << std::setw(10) << "First Name" << RESET << "|"
+              << GREEN << std::setw(10) << "Last Name"  << RESET << "|"
+              << GREEN << std::setw(10) << "Nickname"   << RESET << std::endl;
+    std::cout << "---------------------------------------------" << std::endl;
 
     for (int i = 0; i < contactCount; i++)
     {
-        std::cout << std::setw(10) << i << "|"
+        std::cout << RED << std::setw(10) << i << RESET <<"|"
                   << std::setw(10) << formatField(contacts[i].getFirstName()) << "|"
                   << std::setw(10) << formatField(contacts[i].getLastName())  << "|"
                   << std::setw(10) << formatField(contacts[i].getNickname())  << std::endl;
+        std::cout << "---------------------------------------------" << std::endl;
     }
 
     int index = getValidIndex();
@@ -86,38 +90,25 @@ std::string PhoneBook::getValidInput(const std::string& prompt, const std::strin
 
     while (true)
     {
-        std::cout << prompt;
+        std::cout << BOLD << prompt << RESET;
         if (!std::getline(std::cin, input))
-            return "";
+            return NULL;
 
         if (input.empty())
         {
-            std::cout << "Field cannot be empty." << std::endl;
+            std::cout << RED << "error: " << RESET << "Field cannot be empty." << std::endl;
             continue;
         }
 
         valid = true;
-        
-        if (type == "ALPHA")
-        {
-            for (size_t i = 0; i < input.length(); i++)
-            {
-                if (!std::isalpha(input[i])) 
-                {
-                    valid = false;
-                    std::cout << "Invalid input. Please enter letters only." << std::endl;
-                    break;
-                }
-            }
-        }
-        else if (type == "NUMERIC")
+        if (type == "NUMERIC")
         {
             for (size_t i = 0; i < input.length(); i++)
             {
                 if (!std::isdigit(input[i]))
                 {
                     valid = false;
-                    std::cout << "Invalid input. Please enter digits only." << std::endl;
+                    std::cout << RED << "error: " << RESET << "Invalid input. Please enter digits only." << std::endl;
                     break;
                 }
             }
@@ -143,14 +134,14 @@ int PhoneBook::getValidIndex() const
 
     if (input.length() != 1 || !isdigit(input[0]))
     {
-        std::cout << "Invalid index." << std::endl;
+        std::cout << RED << "error: " << RESET << "Invalid index." << std::endl;
         return -1;
     }
 
     int index = input[0] - '0';
     if (index < 0 || index >= contactCount)
     {
-        std::cout << "Invalid index." << std::endl;
+        std::cout << RED << "error: " << RESET << "Invalid index." << std::endl;
         return -1;
     }
     return index;

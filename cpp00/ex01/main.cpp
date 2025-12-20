@@ -1,5 +1,5 @@
 #include "PhoneBook.hpp"
-#include <iostream> // std::cout, std::cin, std::getline
+#include <iostream>
 
 int main()
 {
@@ -8,7 +8,7 @@ int main()
 
     while (true)
     {
-        std::cout << "Enter command (ADD, SEARCH, EXIT): ";
+        std::cout << BOLD << "Enter command" << RESET << "(ADD, SEARCH, EXIT): ";
         std::getline(std::cin, command);
 
         if (std::cin.eof())
