@@ -1,6 +1,6 @@
 # ********************************* SETUP ************************************ #
 
-NAME        = account
+NAME        = Account
 
 # Compiler & Flags
 CPP         = c++

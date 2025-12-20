@@ -38,9 +38,6 @@ void PhoneBook::addContact()
     if (contactCount < 8)
         contactCount++;
     contactIndex = (contactIndex + 1) % 8;
-
-    std::cout << CLEAR_SCREEN << RESET;
-    std::cout << GREEN << "Contact added successfully." << RESET << std::endl;
 }
 
 void PhoneBook::searchContacts() const

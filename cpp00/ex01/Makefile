@@ -1,6 +1,6 @@
 # ********************************* SETUP ************************************ #
 
-NAME        = phonebook
+NAME        = PhoneBook
 
 # Compiler & Flags
 CPP         = c++

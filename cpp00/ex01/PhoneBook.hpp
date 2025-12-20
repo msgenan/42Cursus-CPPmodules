@@ -2,14 +2,14 @@
 # define PHONEBOOK_HPP
 
 #include "Contact.hpp"
-#include <string> // std::string
+#include <string>
 
 // --- COLOR CODES ---
 #define RESET   "\033[0m"
+#define BOLD    "\033[1m"
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
-#define BOLD    "\033[1m"
-#define CLEAR_SCREEN "\033[2J\033[H"
+#define YELLOW  "\033[33m"
 
 class PhoneBook
 {

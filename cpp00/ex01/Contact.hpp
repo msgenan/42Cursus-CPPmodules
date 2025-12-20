@@ -1,7 +1,7 @@
 #ifndef CONTACT_HPP
 # define CONTACT_HPP
 
-#include <string> // std::string
+#include <string>
 
 class Contact 
 {
