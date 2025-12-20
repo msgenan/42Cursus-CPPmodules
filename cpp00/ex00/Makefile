@@ -1,6 +1,6 @@
 # ********************************* SETUP ************************************ #
 
-NAME        = Megaphone
+NAME        = megaphone
 
 # Compiler & Flags
 CPP         = c++
