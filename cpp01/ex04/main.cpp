@@ -2,41 +2,46 @@
 
 static int print_error(std::string message)
 {
-    std::cerr << RED << "Error: " << RESET << message << std::endl;
-    return 1;
+    std::cerr << BOLD << RED << "Error: " << RESET << message << std::endl;
+    return (1);
 }
 
 static std::string replaceContent(std::string content, const std::string& s1, const std::string& s2)
 {
-    if (s1.empty()) 
-        return content;
-    
+    if (s1.empty() || s1 == s2)
+        return (content);
+
     std::string result;
     size_t pos = 0;
     size_t foundPos;
 
     while ((foundPos = content.find(s1, pos)) != std::string::npos)
     {
-        result += content.substr(pos, foundPos - pos);
-        result += s2;
+        result.append(content, pos, foundPos - pos);
+        result.append(s2);
         pos = foundPos + s1.length();
     }
-    result += content.substr(pos);
-    return result;
+    result.append(content, pos, std::string::npos);
+    return (result);
 }
 
 int main(int argc, char const *argv[])
 {
     if (argc != 4)
-        return print_error("Usage: ./replace <filename> <s1> <s2>");
+    {
+        std::cout << YELLOW << "Usage: " << RESET << "./replace <filename> <s1> <s2>" << std::endl;
+        return (1);
+    }
 
-    std::string filename = argv[1];
-    std::string s1 = argv[2];
-    std::string s2 = argv[3];
+    const std::string folder = "files/";
+    const std::string filename = argv[1];
+    const std::string s1 = argv[2];
+    const std::string s2 = argv[3];
+    const std::string inputPath = folder + filename;
 
-    std::ifstream inputFile(filename.c_str());
+    std::ifstream inputFile(inputPath.c_str());
     if (!inputFile.is_open())
-        return print_error("Could not open input file: " + filename);
+        return (print_error("Cannot open file: " + inputPath));
 
     std::string content;
     std::string line;
@@ -50,13 +55,17 @@ int main(int argc, char const *argv[])
 
     std::string result = replaceContent(content, s1, s2);
 
-    // 3. Çıkış dosyasını oluştur ve yaz
-    std::ofstream outFile((filename + ".replace").c_str());
+    const std::string outputPath = inputPath + ".replace";
+    std::ofstream outFile(outputPath.c_str());
     if (!outFile.is_open())
-        return print_error("Could not create output file.");
+        return (print_error("Cannot create output file: " + outputPath));
 
     outFile << result;
     outFile.close();
 
-    return 0;
+    std::cout << BOLD << GREEN << "Success! " << RESET 
+              << CYAN << filename << RESET << " processed into " 
+              << CYAN << filename << ".replace" << RESET << std::endl;
+
+    return (0);
 }

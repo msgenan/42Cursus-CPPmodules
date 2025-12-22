@@ -8,6 +8,7 @@ CPPFLAGS    = -Wall -Wextra -Werror -std=c++98
 
 # Directories
 OBJ_DIR     = obj
+FILES_DIR   = files
 
 # Sources & Objects
 SRCS        = main.cpp
@@ -15,7 +16,6 @@ OBJS        = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
 # ******************************** STYLE ************************************ #
 
-# Color codes and styles
 RESET       = \033[0m
 BOLD        = \033[1m
 RED         = \033[31m
@@ -24,20 +24,23 @@ CYAN        = \033[36m
 GREEN       = \033[32m
 YELLOW      = \033[33m
 
-# Message templates
 MSG_COMPILING = $(CYAN)Compiling:$(RESET) $(BOLD)$<$(RESET)
 MSG_CREATED   = $(GREEN)Executable created:$(RESET) $(BOLD)$(NAME)$(RESET)
 MSG_CLEAN     = $(YELLOW)Object files removed.$(RESET)
-MSG_FCLEAN    = $(YELLOW)Executable removed.$(RESET)
+MSG_FCLEAN    = $(YELLOW)Executable and files removed.$(RESET)
 MSG_SUCCESS   = $(BLUE)$(BOLD)--- SUCCESS ---$(RESET)
 
 # ******************************** RULES ************************************* #
 
-all: $(NAME)
+all: $(NAME) $(FILES_DIR)
 
 # Create object directory
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+
+# Create files directory (for test inputs/outputs)
+$(FILES_DIR):
+	@mkdir -p $(FILES_DIR)
 
 # Compilation rule
 $(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
@@ -60,6 +63,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -rf $(FILES_DIR)
 	@printf "$(RED)$(BOLD)--- FCLEAN ---$(RESET)\n"
 	@printf "$(MSG_FCLEAN)\n"
 
