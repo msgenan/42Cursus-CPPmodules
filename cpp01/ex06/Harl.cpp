@@ -45,13 +45,10 @@ void Harl::complain(std::string level)
     {
         case 0:
             this->debug();
-            /* FALLTHROUGH */
         case 1:
             this->info();
-            /* FALLTHROUGH */
         case 2:
             this->warning();
-            /* FALLTHROUGH */
         case 3:
             this->error();
             break;
