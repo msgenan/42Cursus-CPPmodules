@@ -4,6 +4,11 @@
 #include "Weapon.hpp"
 #include <string>
 
+#define RESET  "\033[0m"
+#define BOLD   "\033[1m"
+#define RED    "\033[31m"
+#define GREEN  "\033[32m"
+
 class HumanB {
 private:
     std::string name;
