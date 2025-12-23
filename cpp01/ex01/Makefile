@@ -42,26 +42,26 @@ $(OBJ_DIR):
 # Compilation rule
 $(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
 	@$(CPP) $(CPPFLAGS) -c $< -o $@
-	@printf "$(MSG_COMPILING)\n"
+	@echo "$(MSG_COMPILING)"
 
 # Linking rule
 $(NAME): $(OBJS)
 	@$(CPP) $(CPPFLAGS) $(OBJS) -o $(NAME)
-	@printf "\n$(MSG_SUCCESS)\n"
-	@printf "$(MSG_CREATED)\n"
-	@printf "$(BLUE)Size: $(RESET)"
+	@echo "\n$(MSG_SUCCESS)"
+	@echo "$(MSG_CREATED)"
+	@echo "$(BLUE)Size: $(RESET)\c"
 	@du -h $(NAME) 2>/dev/null | awk '{print $$1}' || echo "N/A"
-	@printf "\n"
+	@echo
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@printf "$(RED)$(BOLD)--- CLEAN ---$(RESET)\n"
-	@printf "$(MSG_CLEAN)\n"
+	@echo "$(RED)$(BOLD)--- CLEAN ---$(RESET)"
+	@echo "$(MSG_CLEAN)\n"
 
 fclean: clean
 	@rm -f $(NAME)
-	@printf "$(RED)$(BOLD)--- FCLEAN ---$(RESET)\n"
-	@printf "$(MSG_FCLEAN)\n"
+	@echo "$(RED)$(BOLD)--- FCLEAN ---$(RESET)"
+	@echo "$(MSG_FCLEAN)\n"
 
 re: fclean all
 
