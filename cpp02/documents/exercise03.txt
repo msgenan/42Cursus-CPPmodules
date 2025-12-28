@@ -1,0 +1,36 @@
+Exercise 03: BSP
+Exercise 03
+
+Turn-in directory: ex03/
+Files to turn in: Makefile, main.cpp, Fixed.{h, hpp}, Fixed.cpp,
+Point.{h, hpp}, Point.cpp, bsp.cpp
+Allowed functions: roundf (from <cmath>)
+
+Now that you have a functional Fixed class, it would be nice to use it.
+Implement a function that indicates whether a point is inside a triangle or not. Very
+useful, isn’t it?
+
+BSP stands for Binary Space Partitioning. You are welcome. :)
+
+Let’s start by creating the Point class in Orthodox Canonical Form that represents
+a 2D point:
+• Private members:
+◦ A Fixed const attribute x.
+◦ A Fixed const attribute y.
+◦ Anything else useful.
+• Public members:
+◦ A default constructor that initializes x and y to 0.
+◦ A constructor that takes two constant floating-point numbers as parameters.
+It initializes x and y with those parameters.
+◦ A copy constructor.
+◦ A copy assignment operator overload.
+◦ A destructor.
+◦ Anything else useful.
+To conclude, implement the following function in the appropriate file:
+bool bsp( Point const a, Point const b, Point const c, Point const point);
+• a, b, c: The vertices of our beloved triangle.
+• point: The point to check.
+• Returns: True if the point is inside the triangle. False otherwise.
+Thus, if the point is a vertex or on an edge, it will return False.
+
+Implement and turn in your own tests to ensure that your class behaves as expected.
