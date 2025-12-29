@@ -1,6 +1,6 @@
 # ********************************* SETUP ************************************ #
 
-NAME        = HarlFilter
+NAME        = Fixed
 
 # Compiler & Flags
 CPP         = c++
