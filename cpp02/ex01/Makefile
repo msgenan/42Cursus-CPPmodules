@@ -1,6 +1,6 @@
 # ********************************* SETUP ************************************ #
 
-NAME        = FixedPoint
+NAME        = Fixed
 
 # Compiler & Flags
 CPP         = c++
