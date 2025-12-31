@@ -93,7 +93,7 @@ int Fixed::toInt(void) const {
 
 /* --- Non-member Operators --- */
 
-std::ostream & operator<<(std::ostream & o, Fixed const & i) {
-    o << i.toFloat();
-    return o;
+std::ostream& operator<<(std::ostream& outputStream, Fixed const& fixedPointValue) {
+    outputStream << fixedPointValue.toFloat();
+    return outputStream;
 }
