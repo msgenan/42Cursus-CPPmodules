@@ -1,19 +1,33 @@
 #include "Point.hpp"
 
+/* --- Constructors & Destructor --- */
+
 Point::Point() : _x(0), _y(0) {}
 
 Point::Point(const float x, const float y) : _x(x), _y(y) {}
 
 Point::Point(const Point& other) : _x(other._x), _y(other._y) {}
 
-// Const üyeler değiştirilemediği için bu operatör aslında bir şey yapmaz
-// ama OCF kuralı gereği bulunmak zorundadır.
+Point::~Point() {}
+
+/* --- Assignment Operator --- */
+
+/**
+ * Note: Since _x and _y are 'Fixed const', they cannot be reassigned.
+ * This operator is implemented to satisfy the Orthodox Canonical Form, 
+ * but it doesn't modify the members.
+ */
 Point& Point::operator=(const Point& other) {
     (void)other;
     return *this;
 }
 
-Point::~Point() {}
+/* --- Accessors --- */
 
-Fixed Point::getX() const { return _x; }
-Fixed Point::getY() const { return _y; }
+Fixed Point::getX(void) const { 
+    return _x; 
+}
+
+Fixed Point::getY(void) const { 
+    return _y; 
+}

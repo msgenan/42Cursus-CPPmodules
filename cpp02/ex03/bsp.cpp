@@ -17,11 +17,8 @@ bool bsp(Point const a, Point const b, Point const c, Point const point) {
     Fixed pbcArea = calculateArea(point, b, c);
     Fixed pacArea = calculateArea(point, a, c);
 
-    // Kural: Nokta kenar üzerindeyse veya köşedeyse False dönmeli.
-    // Eğer alt üçgenlerden birinin alanı 0 ise nokta kenar/köşe üzerindedir.
     if (pabArea == 0 || pbcArea == 0 || pacArea == 0)
         return false;
 
-    // Alt üçgenlerin alanları toplamı ana üçgene eşitse nokta içeridedir.
     return (pabArea + pbcArea + pacArea == abcArea);
 }
