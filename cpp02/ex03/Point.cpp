@@ -12,11 +12,6 @@ Point::~Point() {}
 
 /* --- Assignment Operator --- */
 
-/**
- * Note: Since _x and _y are 'Fixed const', they cannot be reassigned.
- * This operator is implemented to satisfy the Orthodox Canonical Form, 
- * but it doesn't modify the members.
- */
 Point& Point::operator=(const Point& other) {
     (void)other;
     return *this;
