@@ -4,7 +4,7 @@ int main()
 {
     std::cout << std::endl;
     std::cout << BOLD << BLUE << "╔════════════════════════════════════╗" << RESET << std::endl;
-    std::cout << BOLD << BLUE << "║        ClapTrap Test Suite         ║" << RESET << std::endl;
+    std::cout << BOLD << BLUE << "║            ClapTrap Test           ║" << RESET << std::endl;
     std::cout << BOLD << BLUE << "╚════════════════════════════════════╝" << RESET << std::endl;
     std::cout << std::endl;
 
