@@ -1,6 +1,6 @@
 # ********************************* SETUP ************************************ #
 
-NAME        = claptrap
+NAME        = ScavTrap
 
 # Compiler & Flags
 CPP         = c++
