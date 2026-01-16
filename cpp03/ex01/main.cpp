@@ -12,9 +12,9 @@ int main()
     std::cout << BOLD << YELLOW << "▶ Test 1: Construction & Destruction Chain" << RESET << std::endl;
     std::cout << std::string(40, '-') << std::endl;
     {
-        ScavTrap serena("Serena");
-        serena.attack("Enemy");
-        serena.guardGate();
+        ScavTrap scav("scav");
+        scav.attack("Enemy");
+        scav.guardGate();
     }
     std::cout << std::endl;
 
@@ -22,13 +22,13 @@ int main()
     std::cout << BOLD << YELLOW << "▶ Test 2: ScavTrap vs ClapTrap Stats" << RESET << std::endl;
     std::cout << std::string(40, '-') << std::endl;
     {
-        ClapTrap clap("Clappy");
-        ScavTrap scav("Scavy");
+        ClapTrap clap("Clap");
+        ScavTrap scav("Scav");
         
-        std::cout << "ClapTrap Stats: HP=" << clap.getHitPoints() 
-                  << " Energy=" << clap.getEnergyPoints() 
-                  << " Attack=" << clap.getAttackDamage() << std::endl;
-        std::cout << "ScavTrap Stats: HP=" << scav.getHitPoints() 
+        std::cout << "ClapTrap Stats: HP = " << clap.getHitPoints() 
+                  << " Energy = " << clap.getEnergyPoints() 
+                  << " Attack = " << clap.getAttackDamage() << std::endl;
+        std::cout << "ScavTrap Stats: HP = " << scav.getHitPoints() 
                   << " Energy=" << scav.getEnergyPoints() 
                   << " Attack=" << scav.getAttackDamage() << std::endl;
     }
