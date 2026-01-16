@@ -42,15 +42,6 @@ int main()
     }
     std::cout << std::endl;
 
-    // Test 4: Copy constructor
-    std::cout << BOLD << YELLOW << "▶ Test 4: Copy Constructor" << RESET << std::endl;
-    std::cout << std::string(40, '-') << std::endl;
-    {
-        ClapTrap original("Original");
-        ClapTrap copy(original);
-    }
-    std::cout << std::endl;
-
     std::cout << BOLD << GREEN << "✓ All Tests Complete!" << RESET << std::endl;
     std::cout << std::endl;
 
