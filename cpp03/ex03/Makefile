@@ -48,20 +48,19 @@ $(NAME): $(OBJS)
 	@echo "\n$(MSG_SUCCESS)"
 	@echo "$(MSG_CREATED)"
 	@echo "$(BLUE)Size: $(RESET)\c"
-	@ls -lh $(NAME) | awk '{print $$5}'
+	@du -h $(NAME) 2>/dev/null | awk '{print $$1}' || echo "N/A"
+	@echo
 
-# Cleaning rule
 clean:
 	@rm -rf $(OBJ_DIR)
-	@echo "$(MSG_CLEAN)"
+	@echo "$(RED)$(BOLD)--- CLEAN ---$(RESET)"
+	@echo "$(MSG_CLEAN)\n"
 
-# Full cleaning rule
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(MSG_FCLEAN)"
+	@echo "$(RED)$(BOLD)--- FCLEAN ---$(RESET)"
+	@echo "$(MSG_FCLEAN)\n"
 
-# Rebuild rule
 re: fclean all
 
-# Phony targets
 .PHONY: all clean fclean re
