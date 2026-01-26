@@ -22,13 +22,13 @@ int main()
     std::cout << BOLD << YELLOW << "▶ Test 2: Inherited Stats" << RESET << std::endl;
     std::cout << std::string(40, '-') << std::endl;
     {
-        DiamondTrap hybrid("Hybrid");
+        DiamondTrap diamond("diamond");
         
         std::cout << "DiamondTrap Stats:" << std::endl;
-        std::cout << "  HP: " << hybrid.getHitPoints() << " (FragTrap)" << std::endl;
-        std::cout << "  Energy: " << hybrid.getEnergyPoints() << " (ScavTrap)" << std::endl;
-        std::cout << "  Attack: " << hybrid.getAttackDamage() << " (FragTrap)" << std::endl;
-        hybrid.whoAmI();
+        std::cout << "  HP: " << diamond.getHitPoints() << " (FragTrap)" << std::endl;
+        std::cout << "  Energy: " << diamond.getEnergyPoints() << " (ScavTrap)" << std::endl;
+        std::cout << "  Attack: " << diamond.getAttackDamage() << " (FragTrap)" << std::endl;
+        diamond.whoAmI();
     }
     std::cout << std::endl;
 

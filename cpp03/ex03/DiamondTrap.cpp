@@ -2,11 +2,11 @@
 
 /* --- Orthodox Canonical Form --- */
 
-DiamondTrap::DiamondTrap() : ClapTrap(), FragTrap(), ScavTrap(), _name("default")
+DiamondTrap::DiamondTrap() : ClapTrap("default"), FragTrap(), ScavTrap(), _name("default")
 {
-    ClapTrap::_hitPoints = 100;      // From FragTrap
-    ClapTrap::_energyPoints = 50;    // From ScavTrap
-    ClapTrap::_attackDamage = 30;    // From FragTrap
+    _hitPoints = 100;
+    _energyPoints = 50;
+    _attackDamage = 30;
     ClapTrap::_name = _name + "_clap_name";
     std::cout << GREEN << "DiamondTrap default constructor called" << RESET << std::endl;
 }
@@ -14,15 +14,15 @@ DiamondTrap::DiamondTrap() : ClapTrap(), FragTrap(), ScavTrap(), _name("default"
 DiamondTrap::DiamondTrap(const std::string& name) 
     : ClapTrap(name), FragTrap(name), ScavTrap(name), _name(name)
 {
-    ClapTrap::_hitPoints = 100;      // From FragTrap
-    ClapTrap::_energyPoints = 50;    // From ScavTrap
-    ClapTrap::_attackDamage = 30;    // From FragTrap
+    _hitPoints = 100;
+    _energyPoints = 50;
+    _attackDamage = 30;
     ClapTrap::_name = name + "_clap_name";
     std::cout << GREEN << "DiamondTrap " << CYAN << _name << GREEN << " constructor called" << RESET << std::endl;
 }
 
 DiamondTrap::DiamondTrap(const DiamondTrap& other) 
-    : FragTrap(other), ScavTrap(other), _name(other._name)
+    : ClapTrap(other), FragTrap(other), ScavTrap(other), _name(other._name)
 {
     std::cout << GREEN << "DiamondTrap copy constructor called" << RESET << std::endl;
 }
@@ -48,7 +48,7 @@ DiamondTrap::~DiamondTrap()
 
 void DiamondTrap::attack(const std::string& target)
 {
-    ScavTrap::attack(target);  // Uses ScavTrap's attack
+    ScavTrap::attack(target);
 }
 
 void DiamondTrap::whoAmI(void)
