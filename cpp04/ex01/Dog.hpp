@@ -9,11 +9,13 @@ private:
     Brain* brain;
 
 public:
+    /* --- Orthodox Canonical Form --- */
     Dog();
     Dog(const Dog& other);
     Dog& operator=(const Dog& other);
     ~Dog();
 
+    /* --- Member Functions --- */
     void makeSound() const;
     Brain* getBrain() const;
 };

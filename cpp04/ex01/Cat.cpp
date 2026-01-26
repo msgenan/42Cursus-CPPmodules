@@ -1,5 +1,7 @@
 #include "Cat.hpp"
 
+/* --- Orthodox Canonical Form --- */
+
 Cat::Cat() : brain(new Brain()) {
     this->type = "Cat";
     std::cout << "Cat default constructor called" << std::endl;
@@ -23,6 +25,8 @@ Cat::~Cat() {
     std::cout << "Cat destructor called" << std::endl;
     delete brain;
 }
+
+/* --- Member Functions --- */
 
 void Cat::makeSound() const {
     std::cout << "Meow! Meow!" << std::endl;

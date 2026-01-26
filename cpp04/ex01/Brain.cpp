@@ -1,5 +1,7 @@
 #include "Brain.hpp"
 
+/* --- Orthodox Canonical Form --- */
+
 Brain::Brain() {
     std::cout << "Brain default constructor called" << std::endl;
     for (int i = 0; i < 100; i++) {
@@ -27,6 +29,8 @@ Brain& Brain::operator=(const Brain& other) {
 Brain::~Brain() {
     std::cout << "Brain destructor called" << std::endl;
 }
+
+/* --- Member Functions --- */
 
 void Brain::setIdea(int index, const std::string& idea) {
     if (index >= 0 && index < 100) {

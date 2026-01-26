@@ -9,11 +9,13 @@ private:
     std::string ideas[100];
 
 public:
+    /* --- Orthodox Canonical Form --- */
     Brain();
     Brain(const Brain& other);
     Brain& operator=(const Brain& other);
     ~Brain();
 
+    /* --- Member Functions --- */
     void setIdea(int index, const std::string& idea);
     std::string getIdea(int index) const;
 };

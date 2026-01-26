@@ -1,5 +1,7 @@
 #include "Animal.hpp"
 
+/* --- Orthodox Canonical Form --- */
+
 Animal::Animal() : type("Animal") {
     std::cout << "Animal default constructor called" << std::endl;
 }
@@ -19,6 +21,8 @@ Animal& Animal::operator=(const Animal& other) {
 Animal::~Animal() {
     std::cout << "Animal destructor called" << std::endl;
 }
+
+/* --- Member Functions --- */
 
 void Animal::makeSound() const {
     std::cout << "Some generic animal sound..." << std::endl;
