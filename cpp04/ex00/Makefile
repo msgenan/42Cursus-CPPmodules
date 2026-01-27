@@ -1,6 +1,6 @@
 # ********************************* SETUP ************************************ #
 
-NAME        = polymorphism
+NAME        = Polymorphism
 
 # Compiler & Flags
 CPP         = c++
