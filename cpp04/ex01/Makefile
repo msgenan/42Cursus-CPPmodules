@@ -1,6 +1,6 @@
 # ********************************* SETUP ************************************ #
 
-NAME        = brain
+NAME        = Brain
 
 # Compiler & Flags
 CPP         = c++
@@ -10,7 +10,7 @@ CPPFLAGS    = -Wall -Wextra -Werror -std=c++98 -Wno-shadow
 OBJ_DIR     = obj
 
 # Sources & Objects
-SRCS        = main.cpp Animal.cpp Dog.cpp Cat.cpp Brain.cpp
+SRCS        = main.cpp Animal.cpp Dog.cpp Cat.cpp Brain.cpp WrongAnimal.cpp WrongCat.cpp
 OBJS        = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
 # Color codes and styles
