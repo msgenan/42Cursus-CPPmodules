@@ -10,7 +10,7 @@ CPPFLAGS    = -Wall -Wextra -Werror -std=c++98 -Wno-shadow
 OBJ_DIR     = obj
 
 # Sources & Objects
-SRCS        = Bureaucrat.cpp main.cpp
+SRCS        = Bureaucrat.cpp Form.cpp main.cpp
 OBJS        = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
 # Color codes and styles
