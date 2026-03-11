@@ -12,6 +12,8 @@
 #define BLUE   "\033[34m"
 #define CYAN   "\033[36m"
 
+class Form;
+
 class Bureaucrat
 {
 private:
@@ -29,6 +31,8 @@ public:
 
     void    incrementGrade();
     void    decrementGrade();
+
+    void    signForm(Form& form);
 
     class GradeTooHighException : public std::exception
     {
