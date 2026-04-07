@@ -1,4 +1,7 @@
 #include "RobotomyRequestForm.hpp"
+#include <ctime>
+
+static bool seeded = false;
 
 RobotomyRequestForm::RobotomyRequestForm() 
     : AForm("RobotomyRequestForm", 72, 45), _target("default_target") {}
@@ -23,6 +26,12 @@ RobotomyRequestForm::~RobotomyRequestForm() {}
 
 void RobotomyRequestForm::executeAction() const 
 {
+    if (!seeded)
+    {
+        srand(static_cast<unsigned>(time(0)));
+        seeded = true;
+    }
+
     std::cout << "* Bzzzzzztt... Drrrrrrrrr... (Intense drilling noises) *" << std::endl;
 
     if (rand() % 2 == 0)
