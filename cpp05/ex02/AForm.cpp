@@ -1,6 +1,11 @@
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
 
+AForm::AForm() 
+    : _name("Default Form"), _signed(false), _gradeToSign(150), _gradeToExecute(150)
+{
+}
+
 AForm::AForm(const std::string& name, int gradeToSign, int gradeToExecute)
     : _name(name), _signed(false), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute)
 {
@@ -22,9 +27,7 @@ AForm& AForm::operator=(const AForm& other)
     return *this;
 }
 
-AForm::~AForm()
-{
-}
+AForm::~AForm() {}
 
 const std::string& AForm::getName() const
 {
@@ -55,10 +58,12 @@ void AForm::beSigned(const Bureaucrat& bureaucrat)
 
 void AForm::execute(Bureaucrat const & executor) const
 {
-    if (isSigned() == 0)
+    if (!isSigned())
         throw NotSignedException();
+    
     if (executor.getGrade() > getGradeToExecute())
         throw GradeTooLowException();
+    
     executeAction();
 }
 
