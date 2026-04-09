@@ -4,7 +4,7 @@ NAME        = ScalarConverter
 
 # Compiler & Flags
 CPP         = c++
-CPPFLAGS    = -Wall -Wextra -Werror -std=c++98 -Wno-shadow
+CPPFLAGS    = -Wall -Wextra -Werror -std=c++98
 
 # Directories
 OBJ_DIR     = obj
