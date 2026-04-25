@@ -10,7 +10,7 @@ CPPFLAGS    = -Wall -Wextra -Werror -std=c++98
 OBJ_DIR     = obj
 
 # Sources & Objects
-SRCS        = main.cpp Span.cpp
+SRCS        = main.cpp MutantStack.cpp
 OBJS        = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
 # Color codes and styles
