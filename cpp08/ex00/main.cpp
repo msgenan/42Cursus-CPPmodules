@@ -1,7 +1,6 @@
 #include "easyfind.hpp"
 #include <list>
 #include <vector>
-#include <iostream>
 
 // Color codes
 #define RESET       "\033[0m"
