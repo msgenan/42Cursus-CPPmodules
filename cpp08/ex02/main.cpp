@@ -98,7 +98,7 @@ int main()
     std::cout << std::endl;
 
     std::cout << BOLD << GREEN << "╔════════════════════════════════╗" << RESET << std::endl;
-    std::cout << BOLD << GREEN << "║    All Tests Passed! ✓         ║" << RESET << std::endl;
+    std::cout << BOLD << GREEN << "║       All Tests Passed!        ║" << RESET << std::endl;
     std::cout << BOLD << GREEN << "╚════════════════════════════════╝" << RESET << std::endl;
     std::cout << std::endl;
 
