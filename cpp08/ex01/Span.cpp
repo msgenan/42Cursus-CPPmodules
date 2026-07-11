@@ -2,9 +2,7 @@
 #include <algorithm>
 
 Span::Span(unsigned int N) : _n(N) {}
-
 Span::Span(const Span& other) : _n(other._n), _numbers(other._numbers) {}
-
 Span&  Span::operator=(const Span& other) {
     if (this != &other) {
         this->_n = other._n;
@@ -12,7 +10,6 @@ Span&  Span::operator=(const Span& other) {
     }
     return *this;
 }
-
 Span::~Span() {}
 
 void Span::addNumber(int number) {
