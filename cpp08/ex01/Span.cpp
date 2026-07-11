@@ -21,8 +21,8 @@ void Span::addNumber(int number) {
 int Span::longestSpan() {
     if (_numbers.size() < 2)
         throw std::out_of_range("Capacity is below 2!");
-return (*std::max_element(_numbers.begin(), _numbers.end()) -
-        *std::min_element(_numbers.begin(), _numbers.end()));
+    return (*std::max_element(_numbers.begin(), _numbers.end()) -
+            *std::min_element(_numbers.begin(), _numbers.end()));
 }
 
 int Span::shortestSpan() {
