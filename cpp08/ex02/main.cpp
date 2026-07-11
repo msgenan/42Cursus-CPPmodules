@@ -93,7 +93,7 @@ int main()
         for (std::list<int>::iterator it = list.begin(); it != list.end(); ++it)
             std::cout << *it << " ";
         std::cout << std::endl;
-        std::cout << GREEN << "✓ Outputs match!" << RESET << std::endl;
+        std::cout << GREEN << "Outputs match!" << RESET << std::endl;
     }
     std::cout << std::endl;
 
