@@ -89,10 +89,20 @@ int main()
         vector.push_back(15);
         vector.push_back(5);
         std::cout << CYAN << "Vector contents: " << RESET << "5, 10, 5, 15, 5" << std::endl;
+        std::cout << CYAN << "Indexes of 5:    " << RESET << "0, 2, 4" << std::endl;
 
         try {
+            std::vector<int>::iterator it = easyfind(vector, 5);
+            long index = std::distance(vector.begin(), it);
+
             std::cout << MAGENTA << "Note: Returns first occurrence -> " << RESET;
-            std::cout << GREEN << *easyfind(vector, 5) << RESET << std::endl;
+            std::cout << GREEN << *it << RESET;
+            std::cout << CYAN << " (found at index: " << index << ")" << RESET << std::endl;
+
+            if (index == 0)
+                std::cout << GREEN << "Confirmed: this is the FIRST occurrence (index 0)" << RESET << std::endl;
+            else
+                std::cout << RED << "Error: expected index 0, got index " << index << RESET << std::endl;
         }
         catch (const std::exception &e) {
             std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
