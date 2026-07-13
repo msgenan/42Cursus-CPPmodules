@@ -1,9 +1,15 @@
 #include "BitcoinExchange.hpp"
 
-int main()
+int main(int argc, char **argv)
 {
+    if (argc != 2)
+    {
+        std::cerr << "Error: could not open file." << std::endl;
+        return 1;
+    }
+
     BitcoinExchange btc;
-    btc.ParseData();
-    btc.PrintData();
+    btc.ParseData("data.csv");
+    btc.ParseInput(argv[1]);
     return 0;
 }
