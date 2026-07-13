@@ -6,11 +6,18 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <cctype>
+#include <cstdlib>
 
 class BitcoinExchange
 {
 private:
     std::map<std::string, float> _data;
+
+    static std::string trim(const std::string &str);
+    static bool isValidDate(const std::string &date);
+    static bool parseValue(const std::string &str, float &out);
+    float getRate(const std::string &date) const;
 
 public:
     BitcoinExchange();
@@ -18,8 +25,8 @@ public:
     BitcoinExchange &operator=(const BitcoinExchange &other);
     ~BitcoinExchange();
 
-    void ParseData();
-    void PrintData() const; // TEMPORARY DEBUG - remove before submission
+    void ParseData(const std::string &DataPath);
+    void ParseInput(const std::string &InputPath);
 };
 
 #endif
