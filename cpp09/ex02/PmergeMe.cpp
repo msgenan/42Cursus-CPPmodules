@@ -152,3 +152,88 @@ std::vector<int> PmergeMe::fordJohnsonVector(const std::vector<int> &values)
     return result;
 }
 
+// deque version
+
+void PmergeMe::binaryInsertDeq(const std::deque<int> &values, std::deque<size_t> &chain, size_t idx)
+{
+    int val = values[idx];
+    size_t lo = 0;
+    size_t hi = chain.size();
+
+    while (lo < hi)
+    {
+        size_t mid = lo + (hi - lo) / 2;
+        if (values[chain[mid]] < val)
+            lo = mid + 1;
+        else
+            hi = mid;
+    }
+    chain.insert(chain.begin() + lo, idx);
+}
+
+std::deque<size_t> PmergeMe::sortIndicesDeq(const std::deque<int> &values, std::deque<size_t> indices)
+{
+    size_t n = indices.size();
+    if (n <= 1)
+        return indices;
+
+    bool hasStraggler = (n % 2 == 1);
+    size_t stragglerIdx = 0;
+    if (hasStraggler)
+    {
+        stragglerIdx = indices.back();
+        indices.pop_back();
+        n--;
+    }
+
+    std::deque<size_t> largerIdx;
+    std::deque<size_t> smallerIdx;
+    for (size_t i = 0; i < n; i += 2)
+    {
+        size_t idxA = indices[i];
+        size_t idxB = indices[i + 1];
+        if (values[idxA] < values[idxB])
+            std::swap(idxA, idxB);
+        largerIdx.push_back(idxA);
+        smallerIdx.push_back(idxB);
+    }
+
+    std::deque<size_t> sortedLarger = sortIndicesDeq(values, largerIdx);
+
+    std::vector<size_t> posInPairs(values.size());
+    for (size_t i = 0; i < largerIdx.size(); ++i)
+        posInPairs[largerIdx[i]] = i;
+
+    std::deque<size_t> chain;
+    chain.push_back(smallerIdx[posInPairs[sortedLarger[0]]]);
+    for (size_t i = 0; i < sortedLarger.size(); ++i)
+        chain.push_back(sortedLarger[i]);
+
+    std::deque<size_t> pending;
+    for (size_t i = 1; i < sortedLarger.size(); ++i)
+        pending.push_back(smallerIdx[posInPairs[sortedLarger[i]]]);
+
+    std::vector<size_t> order = jacobsthalOrder(pending.size());
+    for (size_t k = 0; k < order.size(); ++k)
+        binaryInsertDeq(values, chain, pending[order[k]]);
+
+    if (hasStraggler)
+        binaryInsertDeq(values, chain, stragglerIdx);
+
+    return chain;
+}
+
+std::deque<int> PmergeMe::fordJohnsonDeque(const std::deque<int> &values)
+{
+    std::deque<size_t> indices;
+    for (size_t i = 0; i < values.size(); ++i)
+        indices.push_back(i);
+
+    std::deque<size_t> sortedIdx = sortIndicesDeq(values, indices);
+
+    std::deque<int> result;
+    for (size_t i = 0; i < sortedIdx.size(); ++i)
+        result.push_back(values[sortedIdx[i]]);
+
+    return result;
+}
