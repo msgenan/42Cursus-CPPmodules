@@ -237,3 +237,51 @@ std::deque<int> PmergeMe::fordJohnsonDeque(const std::deque<int> &values)
 
     return result;
 }
+
+// driver
+void PmergeMe::run(int argc, char **argv)
+{
+    if (argc < 2)
+        throw std::runtime_error("Error");
+
+    std::vector<int> original;
+    for (int i = 1; i < argc; ++i)
+    {
+        int value;
+        if (!parsePositiveInt(argv[i], value))
+            throw std::runtime_error("Error");
+        original.push_back(value);
+    }
+
+    std::cout << "Before:";
+    for (size_t i = 0; i < original.size(); ++i)
+        std::cout << " " << original[i];
+    std::cout << std::endl;
+
+    struct timeval startV, endV;
+    gettimeofday(&startV, NULL);
+    std::vector<int> sortedVec = fordJohnsonVector(original);
+    gettimeofday(&endV, NULL);
+    double usVec = (endV.tv_sec - startV.tv_sec) * 1000000.0
+                 + (endV.tv_usec - startV.tv_usec);
+
+    std::deque<int> originalDeq(original.begin(), original.end());
+    struct timeval startD, endD;
+    gettimeofday(&startD, NULL);
+    std::deque<int> sortedDeq = fordJohnsonDeque(originalDeq);
+    gettimeofday(&endD, NULL);
+    double usDeq = (endD.tv_sec - startD.tv_sec) * 1000000.0
+                 + (endD.tv_usec - startD.tv_usec);
+    (void)sortedDeq;
+
+    std::cout << "After:";
+    for (size_t i = 0; i < sortedVec.size(); ++i)
+        std::cout << " " << sortedVec[i];
+    std::cout << std::endl;
+
+    std::cout << std::fixed << std::setprecision(5);
+    std::cout << "Time to process a range of " << original.size()
+               << " elements with std::vector : " << usVec << " us" << std::endl;
+    std::cout << "Time to process a range of " << original.size()
+               << " elements with std::deque : " << usDeq << " us" << std::endl;
+}
