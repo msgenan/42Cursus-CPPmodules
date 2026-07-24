@@ -30,41 +30,44 @@ bool PmergeMe::parsePositiveInt(const std::string &s, int &out)
     return true;
 }
 
-std::vector<size_t> PmergeMe::jacobsthalOrder(size_t n)
+double PmergeMe::elapsedMicroseconds(const struct timeval &start, const struct timeval &end)
+{
+    return (end.tv_sec - start.tv_sec) * 1000000.0 + (end.tv_usec - start.tv_usec);
+}
+
+std::vector<size_t> PmergeMe::jacobsthalInsertOrder(size_t pendingCount)
 {
     std::vector<size_t> order;
-    if (n == 0)
+    if (pendingCount == 0)
         return order;
 
     order.push_back(0);
 
-    size_t prevBoundary = 2;
-    size_t jPrev = 1;
-    size_t jCurr = 3;
+    size_t lastBoundary = 2;
+    size_t jacobPrev = 1;
+    size_t jacobCurr = 3;
 
-    while (prevBoundary < n + 1)
+    while (lastBoundary < pendingCount + 1)
     {
-        size_t upper = jCurr;
-        if (upper > n + 1)
-            upper = n + 1;
+        size_t upper = jacobCurr;
+        if (upper > pendingCount + 1)
+            upper = pendingCount + 1;
 
-        for (size_t v = upper; v > prevBoundary; --v)
+        for (size_t v = upper; v > lastBoundary; --v)
         {
             if (v == 2)
                 continue;
             order.push_back(v - 2);
         }
 
-        prevBoundary = upper;
-        size_t next = jCurr + 2 * jPrev;
-        jPrev = jCurr;
-        jCurr = next;
+        lastBoundary = upper;
+        size_t next = jacobCurr + 2 * jacobPrev;
+        jacobPrev = jacobCurr;
+        jacobCurr = next;
     }
-
     return order;
 }
 
-// vector version
 void PmergeMe::binaryInsertVec(const std::vector<int> &values, std::vector<size_t> &chain, size_t idx)
 {
     int val = values[idx];
@@ -82,77 +85,64 @@ void PmergeMe::binaryInsertVec(const std::vector<int> &values, std::vector<size_
     chain.insert(chain.begin() + lo, idx);
 }
 
-std::vector<size_t> PmergeMe::sortIndicesVec(const std::vector<int> &values, std::vector<size_t> indices)
+std::vector<size_t> PmergeMe::mergeInsertSortVec(const std::vector<int> &values, std::vector<size_t> items)
 {
-    size_t n = indices.size();
+    size_t n = items.size();
     if (n <= 1)
-        return indices;
-
+        return items;
+    
     bool hasStraggler = (n % 2 == 1);
-    size_t stragglerIdx = 0;
+    size_t straggler = 0;
     if (hasStraggler)
     {
-        stragglerIdx = indices.back();
-        indices.pop_back();
+        straggler = items.back();
+        items.pop_back();
         n--;
     }
 
-    std::vector<size_t> largerIdx;
-    std::vector<size_t> smallerIdx;
+    std::vector<size_t> bigs;
+    std::vector<size_t> partnerOf(values.size());
     for (size_t i = 0; i < n; i += 2)
     {
-        size_t idxA = indices[i];
-        size_t idxB = indices[i + 1];
-        if (values[idxA] < values[idxB])
-            std::swap(idxA, idxB);
-        largerIdx.push_back(idxA);
-        smallerIdx.push_back(idxB);
+        size_t a = items[i];
+        size_t b = items[i + 1];
+        if (values[a] < values[b])
+            std::swap(a, b);
+        bigs.push_back(a);
+        partnerOf[a] = b;
     }
 
-    std::vector<size_t> sortedLarger = sortIndicesVec(values, largerIdx);
-    std::vector<size_t> posInPairs(values.size());
-
-    for (size_t i = 0; i < largerIdx.size(); ++i)
-        posInPairs[largerIdx[i]] = i;
-
-    std::vector<size_t> chain;
-    chain.push_back(smallerIdx[posInPairs[sortedLarger[0]]]);
-
-    for (size_t i = 0; i < sortedLarger.size(); ++i)
-        chain.push_back(sortedLarger[i]);
+    std::vector<size_t> sortedBigs = mergeInsertSortVec(values, bigs);
+    std::vector<size_t> chain = sortedBigs;
+    chain.insert(chain.begin(), partnerOf[sortedBigs[0]]);
 
     std::vector<size_t> pending;
-    for (size_t i = 1; i < sortedLarger.size(); ++i)
-        pending.push_back(smallerIdx[posInPairs[sortedLarger[i]]]);
+    for (size_t i = 1; i < sortedBigs.size(); ++i)
+        pending.push_back(partnerOf[sortedBigs[i]]);
 
-    std::vector<size_t> order = jacobsthalOrder(pending.size());
+    std::vector<size_t> order = jacobsthalInsertOrder(pending.size());
     for (size_t k = 0; k < order.size(); ++k)
         binaryInsertVec(values, chain, pending[order[k]]);
 
     if (hasStraggler)
-        binaryInsertVec(values, chain, stragglerIdx);
+        binaryInsertVec(values, chain, straggler);
 
     return chain;
 }
 
-std::vector<int> PmergeMe::fordJohnsonVector(const std::vector<int> &values)
+std::vector<int> PmergeMe::sortWithVector(const std::vector<int> &numbers)
 {
-    std::vector<size_t> indices;
-    indices.reserve(values.size());
-    for (size_t i = 0; i < values.size(); ++i)
-        indices.push_back(i);
+    std::vector<size_t> items;
+    for (size_t i = 0; i < numbers.size(); ++i)
+        items.push_back(i);
 
-    std::vector<size_t> sortedIdx = sortIndicesVec(values, indices);
+    std::vector<size_t> sortedItems = mergeInsertSortVec(numbers, items);
 
     std::vector<int> result;
-    result.reserve(values.size());
-    for (size_t i = 0; i < sortedIdx.size(); ++i)
-        result.push_back(values[sortedIdx[i]]);
-
+    for (size_t i = 0; i < sortedItems.size(); ++i)
+        result.push_back(numbers[sortedItems[i]]);
     return result;
 }
-
-// deque version
 
 void PmergeMe::binaryInsertDeq(const std::deque<int> &values, std::deque<size_t> &chain, size_t idx)
 {
@@ -171,107 +161,99 @@ void PmergeMe::binaryInsertDeq(const std::deque<int> &values, std::deque<size_t>
     chain.insert(chain.begin() + lo, idx);
 }
 
-std::deque<size_t> PmergeMe::sortIndicesDeq(const std::deque<int> &values, std::deque<size_t> indices)
+std::deque<size_t> PmergeMe::mergeInsertSortDeq(const std::deque<int> &values, std::deque<size_t> items)
 {
-    size_t n = indices.size();
+    size_t n = items.size();
     if (n <= 1)
-        return indices;
+        return items;
 
     bool hasStraggler = (n % 2 == 1);
-    size_t stragglerIdx = 0;
+    size_t straggler = 0;
     if (hasStraggler)
     {
-        stragglerIdx = indices.back();
-        indices.pop_back();
+        straggler = items.back();
+        items.pop_back();
         n--;
     }
 
-    std::deque<size_t> largerIdx;
-    std::deque<size_t> smallerIdx;
+    std::deque<size_t> bigs;
+    std::vector<size_t> partnerOf(values.size());
     for (size_t i = 0; i < n; i += 2)
     {
-        size_t idxA = indices[i];
-        size_t idxB = indices[i + 1];
-        if (values[idxA] < values[idxB])
-            std::swap(idxA, idxB);
-        largerIdx.push_back(idxA);
-        smallerIdx.push_back(idxB);
+        size_t a = items[i];
+        size_t b = items[i + 1];
+        if (values[a] < values[b])
+            std::swap(a, b);
+        bigs.push_back(a);
+        partnerOf[a] = b;
     }
 
-    std::deque<size_t> sortedLarger = sortIndicesDeq(values, largerIdx);
+    std::deque<size_t> sortedBigs = mergeInsertSortDeq(values, bigs);
 
-    std::vector<size_t> posInPairs(values.size());
-    for (size_t i = 0; i < largerIdx.size(); ++i)
-        posInPairs[largerIdx[i]] = i;
-
-    std::deque<size_t> chain;
-    chain.push_back(smallerIdx[posInPairs[sortedLarger[0]]]);
-    for (size_t i = 0; i < sortedLarger.size(); ++i)
-        chain.push_back(sortedLarger[i]);
+    std::deque<size_t> chain = sortedBigs;
+    chain.insert(chain.begin(), partnerOf[sortedBigs[0]]);
 
     std::deque<size_t> pending;
-    for (size_t i = 1; i < sortedLarger.size(); ++i)
-        pending.push_back(smallerIdx[posInPairs[sortedLarger[i]]]);
+    for (size_t i = 1; i < sortedBigs.size(); ++i)
+        pending.push_back(partnerOf[sortedBigs[i]]);
 
-    std::vector<size_t> order = jacobsthalOrder(pending.size());
+    std::vector<size_t> order = jacobsthalInsertOrder(pending.size());
     for (size_t k = 0; k < order.size(); ++k)
         binaryInsertDeq(values, chain, pending[order[k]]);
 
     if (hasStraggler)
-        binaryInsertDeq(values, chain, stragglerIdx);
+        binaryInsertDeq(values, chain, straggler);
 
     return chain;
 }
 
-std::deque<int> PmergeMe::fordJohnsonDeque(const std::deque<int> &values)
+std::deque<int> PmergeMe::sortWithDeque(const std::deque<int> &numbers)
 {
-    std::deque<size_t> indices;
-    for (size_t i = 0; i < values.size(); ++i)
-        indices.push_back(i);
+    std::deque<size_t> items;
+    for (size_t i = 0; i < numbers.size(); ++i)
+        items.push_back(i);
 
-    std::deque<size_t> sortedIdx = sortIndicesDeq(values, indices);
+    std::deque<size_t> sortedItems = mergeInsertSortDeq(numbers, items);
 
     std::deque<int> result;
-    for (size_t i = 0; i < sortedIdx.size(); ++i)
-        result.push_back(values[sortedIdx[i]]);
-
+    for (size_t i = 0; i < sortedItems.size(); ++i)
+        result.push_back(numbers[sortedItems[i]]);
     return result;
 }
 
-// driver
 void PmergeMe::run(int argc, char **argv)
 {
     if (argc < 2)
         throw std::runtime_error("Error");
 
-    std::vector<int> original;
+    std::vector<int> numbers;
     for (int i = 1; i < argc; ++i)
     {
         int value;
         if (!parsePositiveInt(argv[i], value))
             throw std::runtime_error("Error");
-        original.push_back(value);
+        numbers.push_back(value);
     }
 
     std::cout << "Before:";
-    for (size_t i = 0; i < original.size(); ++i)
-        std::cout << " " << original[i];
+    for (size_t i = 0; i < numbers.size(); ++i)
+        std::cout << " " << numbers[i];
     std::cout << std::endl;
 
-    struct timeval startV, endV;
-    gettimeofday(&startV, NULL);
-    std::vector<int> sortedVec = fordJohnsonVector(original);
-    gettimeofday(&endV, NULL);
-    double usVec = (endV.tv_sec - startV.tv_sec) * 1000000.0
-                 + (endV.tv_usec - startV.tv_usec);
+    std::vector<int> vecInput(numbers.begin(), numbers.end());
+    std::deque<int> deqInput(numbers.begin(), numbers.end());
 
-    std::deque<int> originalDeq(original.begin(), original.end());
-    struct timeval startD, endD;
-    gettimeofday(&startD, NULL);
-    std::deque<int> sortedDeq = fordJohnsonDeque(originalDeq);
-    gettimeofday(&endD, NULL);
-    double usDeq = (endD.tv_sec - startD.tv_sec) * 1000000.0
-                 + (endD.tv_usec - startD.tv_usec);
+    struct timeval start, end;
+
+    gettimeofday(&start, NULL);
+    std::vector<int> sortedVec = sortWithVector(vecInput);
+    gettimeofday(&end, NULL);
+    double vecTime = elapsedMicroseconds(start, end);
+
+    gettimeofday(&start, NULL);
+    std::deque<int> sortedDeq = sortWithDeque(deqInput);
+    gettimeofday(&end, NULL);
+    double deqTime = elapsedMicroseconds(start, end);
     (void)sortedDeq;
 
     std::cout << "After:";
@@ -280,8 +262,8 @@ void PmergeMe::run(int argc, char **argv)
     std::cout << std::endl;
 
     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "Time to process a range of " << original.size()
-               << " elements with std::vector : " << usVec << " us" << std::endl;
-    std::cout << "Time to process a range of " << original.size()
-               << " elements with std::deque : " << usDeq << " us" << std::endl;
+    std::cout << "Time to process a range of " << numbers.size()
+               << " elements with std::vector : " << vecTime << " us" << std::endl;
+    std::cout << "Time to process a range of " << numbers.size()
+               << " elements with std::deque : " << deqTime << " us" << std::endl;
 }
